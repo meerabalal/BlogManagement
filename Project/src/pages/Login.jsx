@@ -4,9 +4,12 @@ import React, { useContext } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import * as Yup from "yup";
 import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  //import the login function from authocontext
   const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
   const postFormData = async (values) => {
     try {
       const response = await axios.post(
@@ -16,6 +19,7 @@ const Login = () => {
       const token = response.data.token;
       const user = response.data.user;
       login(token, user);
+      navigate("/");
       toast.success("Login Successfully");
     } catch (error) {
       toast.error("Login Unsuccessfully");
